@@ -1,5 +1,11 @@
 name: Sample Doppler Secrets Access
-on: [push]
+on:
+  workflow_dispatch:
+    inputs:
+      base_branch:
+        description: "Base branch."
+        required: true
+        default: "main"
 
 jobs:
     main:
