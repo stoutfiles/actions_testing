@@ -1,14 +1,8 @@
 name: Sample Doppler Secrets Access
-on:
-  workflow_dispatch:
-    inputs:
-      base_branch:
-        description: "Base branch."
-        required: true
-        default: "main"
+on: [push]
 
 jobs:
-  main:
+  Secrets_Testing:
     runs-on: ubuntu-latest # ubuntu, macos, and windows are supported
     steps:
 
