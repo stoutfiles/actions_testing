@@ -13,24 +13,24 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-18.04
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+  main:
+    runs-on: ubuntu-latest # ubuntu, macos, and windows are supported
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+        - name: Install Doppler CLI
+          uses: dopplerhq/cli-action@v1
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!!!
+        - name: Test Doppler Access
+          run: doppler run -- printenv | grep SECRET_DOPPLER_1
+          env:
+              DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_DEV }}
+              
+        - name: Pass all secrets to next steps
+          run: doppler secrets download --no-file --format env-no-quotes >> $GITHUB_ENV; 
+          env:
+            DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_DEV }}
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+        - name: Print variable from Doppler 
+          run: |
+            echo "$SECRET_DOPPLER_1"
+            echo "$SECRET_DOPPLER_2"
