@@ -21,7 +21,7 @@ jobs:
           uses: dopplerhq/cli-action@v1
 
         - name: Test Doppler Access
-          run: doppler run -- printenv | grep SECRET_DOPPLER_1
+          run: doppler run -- printenv | grep DOPPLER_SECRET_1
           env:
               DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_DEV }}
               
@@ -32,5 +32,5 @@ jobs:
 
         - name: Print variable from Doppler 
           run: |
-            echo "$SECRET_DOPPLER_1"
-            echo "$SECRET_DOPPLER_2"
+            echo "$DOPPLER_SECRET_1"
+            echo "$DOPPLER_SECRET_2"
